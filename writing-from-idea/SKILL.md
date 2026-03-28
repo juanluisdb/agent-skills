@@ -72,6 +72,11 @@ One pass for structure, one for language.
 
 **Language pass:** Cut everything that doesn't add value. Check that it sounds like a human talking. Read it out loud - where you stumble, rewrite; where you get bored, cut.
 
+- Cut transition sentences and paragraphs that only announce the next idea instead of delivering it.
+- Watch for repeated rhetorical patterns. If multiple lines use the same contrast template or cadence, rewrite them into plainer observation.
+- Check paragraph rhythm. If everything is equally short, equally neat, or equally polished, the draft may feel generated even when the ideas are good.
+- Remove any sentence that sounds designed to be quoted if it does not add real substance.
+
 ---
 
 ## Before publishing - checklist

@@ -78,3 +78,25 @@ Nothing in the piece is wasted. Every sentence, paragraph, and section earns its
 **Bad:** The piece repeats itself. Examples are generic or decorative. Paragraphs exist to make the piece feel thorough rather than to add substance. The introduction over-explains what's coming. The conclusion re-summarizes what was just said.
 
 The test: *what happens if this sentence, paragraph, or section is removed? If the answer is "nothing much," remove it.*
+
+---
+
+## 7. AI Slop to Avoid
+
+Many weak drafts fail not because they are unclear, but because they are too smooth in the wrong ways. They produce the shape of good writing without the pressure, specificity, or intent that makes writing feel authored.
+
+**Watch for these signs:**
+
+- **Neat opposition patterns used too often.** Sentences built around clean contrasts can sound manufactured when overused. Examples: "not X, Y", "people think X, but Y", "the problem isn't X, it's Y". Use them sparingly. If a direct observation says the same thing better, prefer the observation.
+- **Diagnosis sentences that sound designed to be quoted.** A line that compresses the whole argument into a perfect takeaway often weakens the piece instead of strengthening it. Good writing does not need every paragraph to contain a slogan.
+- **Transition paragraphs that only announce the next point.** If a paragraph exists mainly to say "here is the interesting part" or "this leads to a bigger issue", cut it and make the point directly.
+- **Uniform paragraph rhythm.** When every paragraph has the same length, cadence, and structure, the piece starts sounding assembled. Vary density and pace naturally.
+- **Surface-level framing instead of observed substance.** A paragraph that surveys the discourse, names familiar categories, or summarizes the current moment may sound smart while saying very little. Prefer specifics, examples, and concrete claims.
+- **Restatement disguised as progress.** If a sentence only repeats the previous sentence in cleaner words, remove it. Movement matters more than polish.
+- **Symmetry that flattens voice.** Real writing is often slightly uneven. When a sentence sounds balanced, polished, and generic at the same time, it may need to become less tidy and more precise.
+
+**Good:** The reader feels a person is noticing something real and trying to say it as clearly as possible.
+
+**Bad:** The piece sounds fluent, organized, and plausible, but too many sentences feel interchangeable with other polished writing on the same topic.
+
+The test: *does this sentence describe something observed, or does it merely sound like writing?*
