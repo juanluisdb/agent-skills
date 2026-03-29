@@ -94,6 +94,10 @@ Many weak drafts fail not because they are unclear, but because they are too smo
 - **Surface-level framing instead of observed substance.** A paragraph that surveys the discourse, names familiar categories, or summarizes the current moment may sound smart while saying very little. Prefer specifics, examples, and concrete claims.
 - **Restatement disguised as progress.** If a sentence only repeats the previous sentence in cleaner words, remove it. Movement matters more than polish.
 - **Symmetry that flattens voice.** Real writing is often slightly uneven. When a sentence sounds balanced, polished, and generic at the same time, it may need to become less tidy and more precise.
+- **Diagnosis language instead of object-level observation.** A sentence that names the category of the problem ("this is a context placement issue") is often weaker than a sentence that points at the thing itself ("the code made it into Git but most of the reasoning didn't"). Prefer describing what is happening before naming what bucket it belongs in.
+- **Examples that explain too hard.** If an example exists mainly to walk the reader toward the point, it may feel synthetic. Keep examples that add texture, pressure, or evidence. Cut the ones that only illustrate a claim the reader already understands.
+- **Openings that spend too long on the general moment.** A broad setup about "how things are changing" is often a way of delaying the real idea. Get to the specific claim early.
+- **Endings that turn into slogans.** A neat final sentence can weaken the piece if it sounds designed to be quoted. End on an observation, implication, or image that stays with the reader instead of trying to compress the whole piece into one takeaway line.
 
 **Good:** The reader feels a person is noticing something real and trying to say it as clearly as possible.
 

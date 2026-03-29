@@ -15,6 +15,12 @@ Before touching the draft, answer these three questions in one sentence each:
 
 If any answer is vague, the piece will be vague. Sharpen these first.
 
+Then answer one more question for yourself:
+
+- **What is the observed sentence this piece is really trying to say?** Not the diagnosis, not the framework, not the category name. The thing you actually noticed.
+
+If you can only state the idea as a tidy abstraction, you probably do not have the right sentence yet.
+
 ---
 
 ## Step 2 - Build the outline
@@ -30,6 +36,11 @@ Default structure:
 Under each section, list the points you want to make as bullets. Rearrange freely until the order feels logical. Don't write prose yet.
 
 Leave the intro and conclusion blank for now.
+
+Before moving on, check the outline for two common problems:
+
+- **Too much scene-setting:** If the first section mostly explains the general landscape, shrink it. Get to the actual claim faster.
+- **Too little pressure:** If the bullets sound true but generic, add the concrete examples, contrasts, or observations that make this piece yours.
 
 ---
 
@@ -47,7 +58,7 @@ Convert the outline to prose section by section. Don't edit while writing.
 
 **Intro:** One job only - pull the reader in. Don't warm up to the topic. Start with the tension, the counterintuitive claim, or the specific scenario that makes the reader want to know more. No "In this article, I will..."
 
-**Conclusion:** Give the reader something to carry away - a restatement that feels like a landing, a call to action, or the implication of everything you've said. Not a summary.
+**Conclusion:** Give the reader something to carry away - an implication, a final observation, or a landing point that opens outward. Not a summary and not a slogan.
 
 ---
 
@@ -76,6 +87,9 @@ One pass for structure, one for language.
 - Watch for repeated rhetorical patterns. If multiple lines use the same contrast template or cadence, rewrite them into plainer observation.
 - Check paragraph rhythm. If everything is equally short, equally neat, or equally polished, the draft may feel generated even when the ideas are good.
 - Remove any sentence that sounds designed to be quoted if it does not add real substance.
+- Replace diagnosis lines with object-level observations when possible. Show the thing before naming the category.
+- Cut examples that explain too hard. If an example exists only to escort the reader to the point, it is probably not earning its place.
+- If the draft still sounds too smooth after line editing, stop polishing and rewrite from the 3-5 claims that actually matter. Sometimes the problem is not the sentences - it is that the draft was built around the wrong spine.
 
 ---
 
