@@ -43,6 +43,8 @@ The piece has a clear logic that the reader can follow without effort. Every sec
 
 The test: *could any section be removed or moved without the reader noticing? If yes, something is wrong.*
 
+Another test: *does the piece have a turn?* A strong article often needs more than one insight. If paragraph 4 is still making paragraph 2's point with fresher examples, the argument is circling instead of developing.
+
 ---
 
 ## 4. Clarity
@@ -66,6 +68,8 @@ The piece sounds like a person thinking, not a document being filed.
 **Bad:** The writing sounds formal in a way that creates distance. It switches registers - professional in one paragraph, casual in another. It uses passive constructions to avoid owning claims. It sounds like it was written to seem credible rather than to communicate.
 
 The test: *would someone say this sentence out loud to another person? If not, why is it written that way?*
+
+Rhythm matters here. Short declarative sentences can create force, but overused they become a tic. If every sentence lands with the same weight, the prose starts sounding assembled. Vary sentence length and cadence on purpose.
 
 ---
 
@@ -98,6 +102,8 @@ Many weak drafts fail not because they are unclear, but because they are too smo
 - **Examples that explain too hard.** If an example exists mainly to walk the reader toward the point, it may feel synthetic. Keep examples that add texture, pressure, or evidence. Cut the ones that only illustrate a claim the reader already understands.
 - **Openings that spend too long on the general moment.** A broad setup about "how things are changing" is often a way of delaying the real idea. Get to the specific claim early.
 - **Endings that turn into slogans.** A neat final sentence can weaken the piece if it sounds designed to be quoted. End on an observation, implication, or image that stays with the reader instead of trying to compress the whole piece into one takeaway line.
+- **Framework language that hides weak architecture.** Naming categories cleanly can make a draft feel smart even when the argument is not moving. If the framework does not create a stronger turn or sharper implication, it is probably dead weight.
+- **Diagnosis without implication.** A piece can name the problem accurately and still feel incomplete. Not every article needs a solution, but most need to make clear what follows from the observation.
 
 **Good:** The reader feels a person is noticing something real and trying to say it as clearly as possible.
 

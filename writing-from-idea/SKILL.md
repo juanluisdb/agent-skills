@@ -41,6 +41,8 @@ Before moving on, check the outline for two common problems:
 
 - **Too much scene-setting:** If the first section mostly explains the general landscape, shrink it. Get to the actual claim faster.
 - **Too little pressure:** If the bullets sound true but generic, add the concrete examples, contrasts, or observations that make this piece yours.
+- **No turn:** If every section is making the same point with slightly different examples, the draft will circle. Decide what changes in the reader's understanding midway through the piece. A good article often needs a turn: a second insight, a raised stake, or a sharper implication.
+- **Too many decorative examples:** Mark which examples are proving the point and which ones are just illustrating it again. Keep the ones that add pressure. Cut the rest.
 
 ---
 
@@ -51,6 +53,7 @@ Convert the outline to prose section by section. Don't edit while writing.
 - Write badly on purpose if needed - the goal is a complete skeleton, not a good one.
 - If stuck, speak the idea out loud (or into a message to yourself), then write what you said. Spoken language is always easier than written hesitation.
 - If a new idea arrives mid-draft that doesn't fit, note it at the bottom and keep going.
+- Do not default to one sentence rhythm. Short sentences are useful, but if every line lands the same way the draft starts sounding assembled. Let some sentences carry two connected thoughts.
 
 ---
 
@@ -83,12 +86,14 @@ One pass for structure, one for language.
 
 **Language pass:** Cut everything that doesn't add value. Check that it sounds like a human talking. Read it out loud - where you stumble, rewrite; where you get bored, cut.
 
+- Before polishing sentences, check the argument architecture. What is the core claim? What is the turn? What is the implication? If those are weak, line edits will only produce cleaner slop.
 - Cut transition sentences and paragraphs that only announce the next idea instead of delivering it.
 - Watch for repeated rhetorical patterns. If multiple lines use the same contrast template or cadence, rewrite them into plainer observation.
 - Check paragraph rhythm. If everything is equally short, equally neat, or equally polished, the draft may feel generated even when the ideas are good.
 - Remove any sentence that sounds designed to be quoted if it does not add real substance.
 - Replace diagnosis lines with object-level observations when possible. Show the thing before naming the category.
 - Cut examples that explain too hard. If an example exists only to escort the reader to the point, it is probably not earning its place.
+- If the piece diagnoses well but still feels unfinished, ask whether it is missing an implication. Not every article needs a full solution, but most need to make clear what follows from the observation.
 - If the draft still sounds too smooth after line editing, stop polishing and rewrite from the 3-5 claims that actually matter. Sometimes the problem is not the sentences - it is that the draft was built around the wrong spine.
 
 ---
