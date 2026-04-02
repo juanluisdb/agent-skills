@@ -13,7 +13,7 @@ Ask the user (skip anything already provided via arguments or context):
 
 1. **Skill name** — lowercase, hyphens only (e.g. `review-pr`, `run-tests`). Use `$ARGUMENTS` if provided.
 2. **What should the skill do?** — one sentence is enough.
-3. **Example requests** — gather or infer 2-3 realistic examples of what a user would actually say when this skill should trigger.
+3. **Trigger phrasing** — gather or infer 2-3 realistic ways the need would show up in user language or context. Use this to sharpen discovery and boundaries; do not include an `Example Requests` section in the final skill unless it materially clarifies a confusing trigger.
 4. **Expected output** — what should the agent produce or accomplish?
 5. **Edge cases or constraints** — unusual inputs, failure cases, or important rules.
 6. **Scope** — where to store it:
@@ -51,6 +51,7 @@ description: <what it does and WHEN to use it>
   - what the skill does
   - when to use it, based on realistic user phrasing or contexts
 - Also make the boundaries clear. If helpful, mention cases where the skill should **not** be used so it does not trigger for adjacent but different tasks.
+- Treat realistic user phrasing as authoring input for the `description`, not as default body content. Only keep example requests in the final `SKILL.md` when they materially improve clarity for the agent.
 
 If the user explicitly asks to prevent automatic invocation, add `disable-model-invocation: true`.
 
