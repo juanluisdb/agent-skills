@@ -18,6 +18,8 @@ Use this skill when the main task is to understand and act on existing review co
 - Identify the review surface: PR, MR, local review export, or pasted comments.
 - Read the change intent first so comments are evaluated in context.
 - Collect existing comments or discussions, prioritizing unresolved or actionable threads unless the user asks for everything.
+- For GitHub PRs, load `references/github-feedback.md`. If `gh` is available, use the helper script there to fetch threads efficiently.
+- If `gh` fails because of sandbox, auth, or environment restrictions, do not assume no feedback exists. Consider rerunning outside the sandbox with approval if that access is important to the task.
 
 ## Evaluate Each Thread
 
