@@ -1,11 +1,23 @@
 ---
 name: rfc
-description: Create or work on an RFC (Request for Comments). Use when the user wants to start a new RFC, discuss a feature/architecture proposal, or work on an existing RFC.
+description: Create or work on an RFC (Request for Comments). Use when the user wants to start a new RFC, shape a proposal, or refine an RFC in progress.
 ---
 
 # RFC - Request for Comments
 
 Lightweight decision records for features, architecture, and technical discussions. RFCs live in the repo so decisions are searchable, reviewable, and permanent - even rejected or postponed ones.
+
+## Scope
+
+Use this skill for writing or refining an RFC.
+
+- Starting a new RFC
+- Turning a rough proposal into a structured RFC
+- Expanding an in-progress RFC with the right supporting docs
+
+## Process Guidance
+
+Load `references/writing-rfcs.md` when the user needs help thinking through the RFC itself: problem framing, structure, alternatives, trade-offs, or how to split the docs.
 
 ## Workflow
 
