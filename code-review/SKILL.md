@@ -62,7 +62,8 @@ Use the lenses that match the change:
 
 Load deeper references only when they materially help:
 
-- `references/python-review.md` for Python-heavy reviews
+- `references/typescript-review.md` for TypeScript reviews
+- `references/python-review.md` for Python reviews
 - `references/security-review.md` for auth, input handling, secrets, permissions, external calls, or other risky boundaries
 - `references/conventional-comments.md` when drafting review comments for posting
 
