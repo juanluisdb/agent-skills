@@ -52,6 +52,7 @@ description: <what it does and WHEN to use it>
   - when to use it, based on realistic user phrasing or contexts
 - Also make the boundaries clear. If helpful, mention cases where the skill should **not** be used so it does not trigger for adjacent but different tasks.
 - Treat realistic user phrasing as authoring input for the `description`, not as default body content. Only keep example requests in the final `SKILL.md` when they materially improve clarity for the agent.
+- The body should usually **not** repeat discovery text already captured in the `description`. Avoid sections like `Use This When` when they mostly restate the frontmatter. Keep post-load content focused on execution, constraints, inputs, workflow, and output.
 
 If the user explicitly asks to prevent automatic invocation, add `disable-model-invocation: true`.
 
@@ -98,6 +99,8 @@ Run exactly this sequence:
 ### Writing effective content
 
 **The agent is already smart.** Only include what the agent doesn't already know. Challenge each line: "Does the agent need this explanation, or does it already know this?" Don't explain what PDFs are, how libraries work, or general programming concepts. Do explain your specific patterns, conventions, constraints, and non-obvious rules.
+
+**Do not duplicate the frontmatter.** If the `description` already explains what the skill does and when it should trigger, do not restate that in the body unless it adds a non-obvious execution boundary or prevents a likely mistake after the skill is loaded.
 
 **Be concrete enough to verify.** "Use 2-space indentation" beats "format code properly." "Run `npm test` before committing" beats "test your changes." If you couldn't check whether the agent followed the instruction, it's too vague.
 
