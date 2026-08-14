@@ -1,37 +1,71 @@
-# Conventional Comments
+# Conventional Comments Reference
 
-Load this reference only when turning agreed findings into review comments for GitHub, GitLab, or another review surface.
+Format for MR review comments. Load this when drafting comments for posting.
 
 ## Labels
 
-- `issue:` for concrete problems
-- `suggestion:` for specific improvements
-- `question:` for clarification
-- `thought:` for non-blocking design commentary
-- `nitpick:` for trivial style preferences
-- `note:` for neutral context
+| Label | When to use |
+|---|---|
+| `suggestion:` | Propose a specific improvement |
+| `issue:` | Highlight a concrete problem |
+| `question:` | Seek clarification or context |
+| `thought:` | Non-blocking idea for consideration |
+| `nitpick:` | Trivial preference, style-only |
+| `todo:` | Small necessary change |
+| `chore:` | Process or housekeeping task |
+| `note:` | FYI, always non-blocking |
 
-Optional decorations can make intent clearer:
+## Decorations (optional, in parentheses after label)
 
-- `(blocking)`
-- `(non-blocking)`
-- `(security)`
-- `(test)`
-- `(if-minor)`
+| Decoration | Meaning |
+|---|---|
+| `(non-blocking)` | Should not prevent merge |
+| `(blocking)` | Must resolve before merge |
+| `(if-minor)` | Resolve only if the fix is trivial |
+| `(security)` | Security-related concern |
+| `(test)` | Test-related concern |
 
-## Comment Pattern
+## Priority to Label Mapping
 
-Keep comments short and actionable:
+| Finding priority | Conventional Comment label |
+|---|---|
+| CRITICAL | `issue (blocking):` |
+| HIGH | `issue (blocking):` |
+| MEDIUM | `issue:` or `suggestion:` |
+| LOW | `nitpick:` or `suggestion (non-blocking):` |
+| SMELL | `issue (non-blocking):` — note that full context may be needed |
 
-1. label the concern
-2. state the issue clearly
-3. explain why it matters if the reason is not obvious
-4. offer a concrete fix or alternative
+A finding without a "Proposed fix" maps to `issue:` or `question:` (no `suggestion:` partner needed). Don't invent a fix to fill the form.
 
-## Mapping
+## Comment Structure
 
-- `CRITICAL` or `HIGH` usually maps to `issue (blocking):`
-- `MEDIUM` often maps to `issue:` or `suggestion:`
-- `LOW` often maps to `suggestion (non-blocking):` or `nitpick:`
-- `SMELL` often maps to `issue (non-blocking):`
-- `SUGGESTION` often maps to `thought:` or `suggestion (non-blocking):`
+Each comment should:
+
+1. Start with the label and optional decoration
+2. State the concern clearly in 1-2 sentences
+3. Include a brief "why" when the reason isn't obvious from the code
+4. Include a **concrete suggestion** *only when the right fix is clear*. When it isn't, a flag-only comment (`issue:` or `question:` with reasoning) is valid and often better than guessing.
+
+**Example — fix is clear, propose it:**
+
+```
+suggestion (non-blocking): Consider using `StrEnum` instead of `Literal["active", "inactive"]` here.
+This centralizes the valid states, makes them greppable, and avoids silent drift
+if new states are added in only some of the places that reference this type.
+```
+
+**Example — concrete bug, fix is clear:**
+
+```
+issue (blocking): This `except Exception` swallows `KeyError` from the config lookup,
+which would silently return `None` instead of surfacing a missing config key.
+Catch `requests.RequestException` specifically, and let config errors propagate.
+```
+
+**Example — flag-only, no proposed fix:**
+
+```
+issue: The retry loop here can re-issue the same write after a partial DB failure,
+but the calling path doesn't appear to be idempotent. I couldn't tell from the diff
+whether the upstream caller dedupes — worth confirming before this lands.
+```
