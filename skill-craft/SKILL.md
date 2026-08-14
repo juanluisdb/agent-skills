@@ -148,7 +148,3 @@ skill-name/
 ├── scripts/           # Optional — helper scripts the agent can execute
 └── assets/            # Optional — templates and output resources
 ```
-
----
-
-*Vocabulary (predictability, leading words, information hierarchy, the failure modes) adapted from Matt Pocock's "writing-great-skills" — github.com/mattpocock/skills.*
