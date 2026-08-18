@@ -9,6 +9,8 @@ A staged review run by a **lead reviewer** (the orchestrator) with **expert suba
 
 A review verifies; it does not build. The project's pre-completion rituals — run the full suite, meet a coverage gate, format the tree — belong to the author and do not apply to the reviewer. Run only what a specific question needs.
 
+**Load `software-design` first.** It holds the judgement a review measures against: module depth and seams, interfaces, data and state, security, what a test actually pins, rollout and idempotency, observability. This skill is the process — how the review is framed, staged, and delivered. Without the judgement loaded, an expert reports style.
+
 ## Review Surface
 
 Identify what is being reviewed:
@@ -100,7 +102,7 @@ The lead's main thinking step here is **expert selection**: *what topics in this
 
 - **Bug expert** — adversarial bug hunter. "How would I break this?" Logic errors, edge cases, race conditions, broken invariants, unintended deletions from a botched merge, missed callers.
 - **Security expert** — trust boundaries, injection, auth/authz, secret handling, permission widening, sensitive data leaks.
-- **Architecture & design expert** — ambitious about structure, not just correctness. Look for "code-judo" reframings that delete whole branches, helpers, modes, or layers rather than rearrange them. Flag feature logic leaking into shared paths, file growth without decomposition, thin wrappers and identity abstractions, unnecessary sequential orchestration, special-case branches bolted onto unrelated flows, and casts/optionality/`any` that obscure the real contract. The bias is *"could this be done meaningfully better?"* not *"is this acceptable?"*. Settle the wrapper and indirection questions with the checklist's Module Depth & Seams checks instead of trading opinions about them: the **deletion test** (inline it at every call site — does complexity vanish, or reappear at N callers?), **one adapter means a hypothetical seam, two means a real one**, and the internal seam promoted into the interface because a test reached for it.
+- **Architecture & design expert** — ambitious about structure, not just correctness. Look for "code-judo" reframings that delete whole branches, helpers, modes, or layers rather than rearrange them. Flag feature logic leaking into shared paths, file growth without decomposition, thin wrappers and identity abstractions, unnecessary sequential orchestration, special-case branches bolted onto unrelated flows, and casts/optionality/`any` that obscure the real contract. The bias is *"could this be done meaningfully better?"* not *"is this acceptable?"*. Settle the wrapper and indirection questions mechanically instead of trading opinions about them: the **deletion test** (inline it at every call site — does complexity vanish, or reappear at N callers?), **one adapter means a hypothetical seam, two means a real one**, and the internal seam promoted into the interface because a test reached for it. The full set is in `software-design`'s modules reference.
 
 **Add experts when the frame and map justify them:**
 
@@ -108,7 +110,7 @@ The lead's main thinking step here is **expert selection**: *what topics in this
 - **Contracts & API expert** — schema/DTO/enum changes, breaking changes, serialization compatibility. The interface is wider than the signature: an invariant, a call-ordering rule, a new error mode, a newly required config key, or a performance characteristic callers lean on can change with no type diff at all, and each is still a breaking change.
 - **Performance expert** — hot paths, fan-out, memory/leaks, blocking I/O.
 - **Consumer experience expert** — when the change exposes a public/SDK/LLM-facing surface.
-- **Agent context expert** — when the diff touches a model-facing surface (tool/function definitions, prompts, tool outputs, error-as-data strings, schema field descriptions). Reviews them as prompts: redundancy with the cached prefix, output that pollutes the window, off-intent hints, actionable-vs-internal errors, micro-prompt field descriptions. Loads `references/agent-context-review.md`.
+- **Agent context expert** — when the diff touches a model-facing surface: tool or function definitions, system and task prompts, prompt templates, tool result strings returned into a model's context, error messages that reach a model, typed-schema field descriptions used as a tool contract. Everything the model reads is a prompt, so brief it to review them as prompts and it will reach for the agent-building reference itself: redundancy against the cached prefix, output that pollutes the window, off-intent hints, actionable-versus-internal errors, micro-prompt field descriptions.
 - **Merge-base / divergent-target expert** — when Phase 1's triage flags a stale base with target commits touching the same regions. Reads those target commits (message + diff) to learn what they changed, then names the specific invariant a careless conflict resolution would silently drop and the test that pins it. A *detector, not a resolver*: it surfaces the semantic regression risk so the author rebases and resolves intentionally — it doesn't touch conflict markers.
 - **Other** — concurrency, migrations, observability, i18n, accessibility — spawn whichever fits.
 
@@ -128,11 +130,7 @@ Default behavior is **run experts without asking**. The ask is only the escape h
 
 Pass each expert subagent the frame, the map, its role, the affected files, and the **resolved diff base** (so experts do not re-derive scope from a stale local ref). **Do not pass the prior-art inventory** — keep experts blind to what was already raised. An expert that independently rediscovers a known issue is *confirming it's real*, which is more valuable than biasing it toward or away from the existing discussion. Reconciliation against prior art is the lead's job in Phase 4, not the expert's. Mutating a test to prove a guarantee is the tests expert's beat — another expert that suspects a weak test says so and moves on rather than running it too. Each expert still runs whatever its own topic needs: a repro for a suspected bug, a script, a benchmark. Instruct it to:
 
-1. Load `references/review-checklist.md`. Add stack overlays as the diff demands:
-   - **Python diff** → load `references/python-review.md`.
-   - **TypeScript diff** → load `references/typescript-review.md`. If `.tsx`/JSX or React hooks are touched, also load `references/react-review.md`. If a browser-facing surface is touched (UI components, public pages, anything served to end users), also load `references/frontend-review.md`; if that surface has visual-detail, animation, or micro-interaction work, `frontend-review.md` points to `references/ui-polish.md` — load it too.
-   - **Security expert** → always load `references/security-review.md` in addition to the above.
-   - **Model-facing surface in the diff** → load `references/agent-context-review.md`. Trigger when the diff touches tool/function definitions, system or task prompts, prompt templates, tool result/output strings returned into a model's context, error messages that reach a model, or typed-schema field descriptions used as a tool contract.
+1. Load `references/review-checklist.md` for the diff dimensions, and the `software-design` skill for the judgement behind them, pulling whichever of its references match its topic. The security expert always loads the security one; the tests expert always loads the testing one. When the diff touches a user-visible surface, load the `visual-design` skill too — its motion reference carries the exact values a polish finding needs. Stack-level convention (language idiom, framework rules, lint policy) comes from the repo: the agent-rule files, the type and lint config, and the code around the change.
 2. Read the relevant files itself — don't trust the map's summary alone.
 3. **Verify or refute the inventory claims assigned to its topic** — with evidence, never by adopting the author's reasoning. "The description says it's safe/faster/equivalent" is not evidence; a docstring asserting an invariant is a claim to test, not a fact to cite.
 4. Be **exhaustive within its topic**. Enumerate the checks performed, not only the findings raised. "No concerns after checking X, Y, Z" is a valid result and surfaces gaps the lead can challenge.
@@ -291,6 +289,7 @@ Only if the user explicitly asks for a review file, save findings to `review-<MR
 One-line anchors — each rule lives in full in its own section above.
 
 - Always spawn the experts; if the change seems too trivial for them, ask — never skip silently.
+- Every expert loads the checklist *and* `software-design`; a review that reports only style means the judgement was never loaded.
 - Findings exist only in Phase 4, grounded with file:line evidence; everything earlier is a hint.
 - Verify the premise before the solution — a premise that breaks the MR's purpose halts the review.
 - Experts report coverage; the lead filters. Materiality calls happen in Phase 4, not in expert reports.

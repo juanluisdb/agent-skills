@@ -4,6 +4,8 @@ Concrete rules for interfaces that feel considered. Great UI is a compounding st
 
 Taste is trained, not innate: these are the defaults exceptional work converges on. Ship good defaults over configuration — most users never customise, so the out-of-the-box easing, timing, and spacing must already be right.
 
+Values are plain CSS so they carry to any stack. If the repo uses a themed component kit (MUI, Chakra), put them in the theme rather than per component — the theme is the one place a whole system gets retuned — and keep the per-component escape hatch (`sx` and friends) for genuine one-offs. Look decisions above the level of these values (hierarchy, spacing scale, type system, colour, copy) live in `look.md`.
+
 ---
 
 ## Motion: decide before you animate
@@ -51,11 +53,13 @@ Valid purposes: spatial continuity (where did this come from / go to), state ind
 | Button press feedback | 100–160ms |
 | Tooltip / small popover | 125–200ms |
 | Dropdown / select | 150–250ms |
-| Modal / drawer | 200–500ms |
+| Modal / drawer | 200–300ms (up to 500ms only for large travel, e.g. a full-height drawer) |
 
-**Keep UI animations under 300ms.** Faster animations make the whole app feel snappier regardless of actual load time (perceived performance).
+**Keep UI animations under 300ms**, and place them within that range by size and distance: larger elements animate slower than small ones, and longer travel earns longer duration.
 
-**Asymmetric enter/exit.** Exits are shorter and softer than enters — the user's focus is already moving on. Where the *user* decides (hold-to-delete), go slow; where the *system* responds (release), snap back fast.
+**Perceived performance is why speed matters.** A faster-spinning spinner makes an app seem to load quicker at identical load time; a 180ms dropdown feels more responsive than a 400ms one; instant tooltips after the first make a whole toolbar feel faster. Easing amplifies it — `ease-out` at 200ms *feels* faster than `ease-in` at 200ms because movement starts immediately, exactly when the user is watching most closely.
+
+**Asymmetric enter/exit.** Exits run shorter and softer than enters (~20% faster is a good starting point) — the user's focus is already moving on. Where the *user* decides (hold-to-delete), go slow; where the *system* responds (release), snap back fast.
 
 ---
 
@@ -73,6 +77,8 @@ Two config styles:
 ```
 
 Keep `bounce` subtle (0.1–0.3), and **0 for most UI** — bounce reads as playful, wrong for crisp/professional surfaces. Match motion personality to the component's vibe.
+
+**Mouse-tracking needs a spring.** Binding a visual value straight to pointer position feels artificial because it has no motion of its own; interpolate through a spring (`useSpring`) so it carries momentum. This holds for *decorative* tracking only — when the value is functional (a reading on a chart, a figure in a banking app), no animation beats a lagging one.
 
 ---
 
@@ -97,7 +103,7 @@ For programmatic control with CSS-grade performance, use the Web Animations API 
 
 ## Enter / exit
 
-**Enter — split and stagger.** Don't animate one big container. Break content into semantic chunks (title, description, actions) and stagger each ~100ms; split hero titles into words at ~80ms. Combine `opacity` + `translateY(12px→0)` + `blur(4px→0)`.
+**Enter — split and stagger.** Don't animate one big container. Break content into semantic chunks (title, description, actions) and stagger each ~100ms; split hero titles into words at ~80ms. For list items arriving together, keep it tighter at 30–80ms — a long cascade down a list reads as the interface being slow. Combine `opacity` + `translateY(12px→0)` + `blur(4px→0)`.
 
 **Exit — subtle.** Small fixed `translateY(-12px)` (not full height), shorter than the enter. Keep a little directional movement so context is preserved; never just `display: none`.
 
@@ -111,15 +117,18 @@ For programmatic control with CSS-grade performance, use the Web Animations API 
 
 **Scale on press.** `scale(0.96)` on `:active` with a 150ms `ease-out` transition gives tactile feedback on any pressable element. Always `0.96`; never below `0.95` (feels exaggerated). Offer a `static` prop to disable where motion distracts.
 
-```tsx
-<button className="transition-transform duration-150 ease-out active:scale-[0.96]">
+```css
+.button          { transition: transform 150ms var(--ease-out); }
+.button:active   { transform: scale(0.96); }
 ```
 
 **Never animate from `scale(0)`.** Full disappearance is unreal — start at `scale(0.95)` + opacity.
 
-**Origin-aware popovers.** A popover should scale out *from its trigger*, not from center: `transform-origin: var(--radix-popover-content-transform-origin)` (or Base UI's `--transform-origin`). Exception: modals stay `transform-origin: center` — they're viewport-centered.
+**Origin-aware popovers.** A popover should scale out *from its trigger*, not from center: set `transform-origin` to where the trigger sits. Some primitive libraries expose it as a CSS variable on the content element (Radix `--radix-popover-content-transform-origin`, Base UI `--transform-origin`); with a kit that doesn't (MUI among them), derive it from the anchor's position and pass it in. Exception: modals stay `transform-origin: center` — they're viewport-centered.
 
 **Tooltips — skip delay on subsequent hovers.** First tooltip has an open delay; once one has shown, sibling tooltips open instantly with no animation (track with a `data-instant` attribute). Matching real cursor intent.
+
+**Hover flicker — animate the child, not the parent.** When a hover transform changes the hovered element's own hit area, the pointer falls outside it mid-animation and the state oscillates. Keep the parent's geometry fixed and transform an inner element instead.
 
 **Contextual icon swaps** (play→pause, like→liked). Animate with `opacity`, `scale`, `blur` — exact values, do not deviate:
 - `scale`: `0.25 → 1`
@@ -138,6 +147,15 @@ Check `package.json` for `motion`/`framer-motion` before choosing; don't add a d
 ```
 
 **Blur to mask imperfect crossfades.** A brief `filter: blur(2px)` during a two-state crossfade blends them and hides overlap. Keep blur < 20px for performance.
+
+---
+
+## Transform mechanics
+
+- **Percentages in `translate()` are relative to the element's own size**, so `translateY(100%)` moves a thing exactly its own height, whatever that turns out to be. This is how a drawer parks itself off-screen and a toast enters from beyond its own edge, with no measurement and no hardcoded pixels. Prefer percentages wherever the element's size depends on its content.
+- **`scale()` scales children too**, unlike `width`/`height`. Pressing a button scales its label and icon with it, which is what makes scale-on-press read as one physical object rather than a resizing box.
+- **`transform-origin` is the anchor every transform pivots around.** Default is centre; set it to where the interaction came from (see origin-aware popovers above).
+- **3D needs no library** — `transform-style: preserve-3d` on the parent plus `rotateX()` / `rotateY()` / `translateZ()` on children gives real depth, coin flips, and orbits in pure CSS.
 
 ---
 
@@ -166,9 +184,9 @@ Check `package.json` for `motion`/`framer-motion` before choosing; don't add a d
 
 **Concentric border radius.** `outerRadius = innerRadius + padding`. Mismatched nested radii are the most common thing that makes UI feel off. If the gap is > 24px, treat layers as separate surfaces and pick radii independently.
 
-```tsx
-<div className="rounded-2xl p-2">   {/* 16px radius, 8px pad */}
-  <div className="rounded-lg">      {/* 8px = 16 − 8 ✓ */}
+```css
+.card  { border-radius: 16px; padding: 8px; }
+.inner { border-radius: 8px; }            /* 8 = 16 − 8 ✓ */
 ```
 
 **Optical over geometric alignment.** When geometric centering looks off, adjust by eye:
@@ -186,8 +204,9 @@ Check `package.json` for `motion`/`framer-motion` before choosing; don't add a d
 
 **Image outlines** — subtle 1px inset outline gives images consistent depth. Colour is **non-negotiable**: pure black `rgb(0 0 0 / .1)` in light, pure white `rgb(255 255 255 / .1)` in dark. Never a tinted near-black/near-white (slate/zinc/neutral) — it picks up the surface colour and reads as dirt on the edge. Use `outline` + `outline-offset: -1px` (doesn't affect layout).
 
-```tsx
-<img className="outline outline-1 -outline-offset-1 outline-black/10 dark:outline-white/10" />
+```css
+img { outline: 1px solid rgb(0 0 0 / .1); outline-offset: -1px; }
+@media (prefers-color-scheme: dark) { img { outline-color: rgb(255 255 255 / .1); } }
 ```
 
 **Minimum hit area** — interactive elements ≥ 40×40px (WCAG target ≥ 44×44 for primary). Extend a small visible control with a pseudo-element; never let two hit areas overlap.
@@ -200,13 +219,16 @@ Check `package.json` for `motion`/`framer-motion` before choosing; don't add a d
 - **`text-wrap: pretty`** — default for short-to-medium text (paragraphs, captions, list items); prevents a lone orphan word. No line limit. Skip both on 10+ line text.
 - **`-webkit-font-smoothing: antialiased`** on the root (`html`) — macOS renders text heavier than intended; this crisps it. Apply once at root, not per-element. No-op on other platforms, safe universally.
 - **`font-variant-numeric: tabular-nums`** on any dynamic number (counters, prices, timers, table columns) — equal-width digits prevent layout shift as values change.
+- **Loosen letter-spacing on uppercase labels** (~`0.05em`) — faces are spaced for mixed case, so uppercase at default tracking reads cramped.
+- **Use the `…` character, not three periods** — a real ellipsis lets truncation follow the container instead of snapping at a fixed character count.
+- **Match the fallback stack's metrics** — choose fallbacks whose x-height and weight sit close to the primary face, and correct the remainder with `size-adjust` / `ascent-override` on `@font-face`, so the font swap doesn't shift layout.
 
 ---
 
 ## Performance
 
 - **Animate only `transform` and `opacity`** (and `filter`, `clip-path`) — they skip layout/paint and run on the GPU. Animating `width`/`height`/`top`/`left`/`margin`/`padding` triggers all three rendering phases.
-- **Never `transition: all`** (nor Tailwind's bare `transition`) — it watches every property, causes unintended transitions, and blocks browser optimisation. Name exact properties: `transition-property: scale, opacity`. (Tailwind `transition-transform` = `transform, translate, scale, rotate`.)
+- **Never `transition: all`** — it watches every property, causes unintended transitions, and blocks browser optimisation. Name exact properties: `transition-property: transform, opacity`. If the repo uses Tailwind, its bare `transition` class is the same trap, and `transition-transform` expands to four properties (`transform, translate, scale, rotate`).
 - **`will-change` sparingly** — only `transform`/`opacity`/`filter`/`clip-path`, and only when you actually see first-frame stutter (Safari benefits most). Never `will-change: all`; each layer costs memory.
 - **For frequent drag, set `transform` directly** on the element, not via an inherited CSS variable (a variable change recalculates all children).
 - **Framer Motion caveat** — shorthands `x`/`y`/`scale` run on the main thread via rAF, not GPU. Under load (e.g. during a page transition) use the full `transform` string for hardware acceleration.
@@ -227,3 +249,25 @@ Check `package.json` for `motion`/`framer-motion` before choosing; don't add a d
 - **Frame-by-frame** — Chrome DevTools Animations panel to catch timing drift between properties invisible at full speed.
 - **Real devices** — test touch/gesture on physical hardware via remote DevTools; simulators lie about gesture feel.
 - **Review the next day** — fresh eyes catch timing imperfections you're blind to after building them. The `opacity`+`height` list enter/exit combo in particular has no formula — tune it until it feels right.
+
+---
+
+## Symptom → fix
+
+Index for when something feels wrong but the cause isn't obvious. Each row points at a rule above.
+
+| Symptom | Look at |
+|---|---|
+| Element appears out of nowhere | Never animate from `scale(0)` (§ Component patterns) |
+| Sluggish despite a short duration | `ease-in` on a UI element (§ What easing) |
+| Shaky or jittery motion | `will-change: transform` (§ Performance) |
+| Hover state flickers on and off | Animate the child, not the parent (§ Component patterns) |
+| Popover grows from the wrong place | `transform-origin` at the trigger (§ Component patterns) |
+| Sequential tooltips feel slow | Skip delay and animation after the first (§ Component patterns) |
+| Crossfade shows two overlapping states | Brief blur to mask it (§ Component patterns) |
+| Motion snaps when re-triggered quickly | Transitions, not keyframes (§ Transitions vs keyframes) |
+| Frames drop while the page is busy | CSS/WAAPI over main-thread JS (§ Performance) |
+| Nested corners look off | Concentric radius (§ Surfaces) |
+| Numbers jitter as they update | `tabular-nums` (§ Typography) |
+| Small control is hard to hit | 40–44px minimum hit area (§ Surfaces) |
+| Everything arrives at once | Stagger 30–80ms for list items (§ Enter / exit) |

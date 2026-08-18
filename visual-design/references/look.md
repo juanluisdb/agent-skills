@@ -1,10 +1,8 @@
-# Visual Design Prompts
+# How It Looks
 
-Design-time prompts for how a surface *looks* and *reads*: hierarchy, spacing, type, colour, states, copy. Load when any user-visible surface is being designed or reshaped.
+Hierarchy, spacing, type, colour, states, copy: the decisions above the level of individual values.
 
-The premise: shipping something that works no longer distinguishes a product, because everyone can now do that. What people judge is how it looks, reads, and feels. That makes visual quality part of the spec, not polish that follows delivery.
-
-Stack-neutral — values are plain CSS, and where a stack changes the mechanics it's called out inline. Motion and micro-detail values live in `ui-polish.md`; platform concerns (a11y, perf, i18n, routing) in `frontend-design.md`.
+Stack-neutral. Values are plain CSS, and where a stack changes the mechanics it is called out inline. Motion and micro-detail values live in `motion.md`.
 
 ---
 
@@ -13,7 +11,7 @@ Stack-neutral — values are plain CSS, and where a stack changes the mechanics 
 Decide what the surface is *for* before deciding how it looks. One view, one job.
 
 - **One primary action per view.** Everything else is secondary or tertiary and looks it. Two competing primaries means the view has two jobs — split it, or pick.
-- **Rank the content before styling it.** List every element in importance order, then spend the strongest treatment on rank one. If there's no clear rank one, the framing isn't settled — back to the Frame lens.
+- **Rank the content before styling it.** List every element in importance order, then spend the strongest treatment on rank one. If there's no clear rank one, the framing isn't settled, and no amount of styling will fix that.
 - **Hierarchy tools in order: position, size, weight, colour, space.** Reach for position and size first, colour last. Colour-only hierarchy disappears in dark mode, in greyscale, and for colour-blind users.
 - **Squint test.** Blur the design mentally (or literally, in the browser). What do you see first? If it isn't rank one, the hierarchy is wrong however good each element looks on its own.
 - **The obvious answer is suspicious.** A big number with a small label, three feature cards, a gradient accent: that's what you'd produce for *any* brief. Use it only when it's genuinely the best fit for this one.
@@ -24,7 +22,7 @@ Decide what the surface is *for* before deciding how it looks. One view, one job
 - **Proximity encodes relationship.** Related things sit closer than unrelated things, and the gap *between* groups exceeds the gap *inside* a group. Most UI that reads as cluttered has uniform spacing, not too much content.
 - **Density matches the task.** A tool used all day for scanning and comparing wants dense rows and tight leading; an onboarding step or a marketing surface wants air. Importing a marketing product's density into a data table is a common mismatch.
 - **Whitespace is a signal.** Space around an element is part of what makes it read as important, so cutting it to fit more in costs hierarchy.
-- **Alignment is a decision, not an accident.** Pick the edges things align to and hold them. Optical adjustments to those edges live in `ui-polish.md` § Surfaces.
+- **Alignment is a decision, not an accident.** Pick the edges things align to and hold them. Optical adjustments to those edges live in `motion.md` § Surfaces.
 
 ## Type
 
@@ -34,7 +32,7 @@ Decide what the surface is *for* before deciding how it looks. One view, one job
 - **Underline is reserved for links.** Underlining non-link text trains people to click inert copy, which degrades the affordance everywhere else in the product.
 - **In a greenfield direction, pair faces deliberately** — a characteristic display face used with restraint, a body face chosen to complement it, and a utility face for captions or dense data if the surface needs one. The type treatment is part of the personality, not a neutral delivery vehicle.
 
-Property-level rules (`text-wrap`, `tabular-nums`, uppercase tracking, the `…` character, font-smoothing, fallback metrics) live in `ui-polish.md` § Typography.
+Property-level rules (`text-wrap`, `tabular-nums`, uppercase tracking, the `…` character, font-smoothing, fallback metrics) live in `motion.md` § Typography.
 
 ## Colour
 
@@ -52,7 +50,7 @@ A screen is a family of states. Design the awkward ones at planning time — the
 - **Longest plausible string** — the 60-character company name, the German label, the person with one name. Any fixed-width text container needs an overflow plan: truncate with the full value available on hover, wrap, or scroll.
 - **Missing and partial data** — a null field, a failed sub-request that leaves the rest usable, a stale value. Decide what renders instead: a dash, a placeholder, or nothing at all.
 - **Permission and role variants** — what does a read-only user see where the primary action sits? Hiding and disabling send different messages; pick deliberately and say which.
-- **Async trio** — loading, empty, and error are covered in `react-design.md` § Loading / empty / error stories. Any fetching surface needs them.
+- **Async trio.** Any fetching surface needs a loading, an empty, and an error state, and each is a design decision rather than a fallback: what the loading state preserves of the layout, what the empty state invites the person to do, what the error state tells them to try next.
 
 ## Copy
 

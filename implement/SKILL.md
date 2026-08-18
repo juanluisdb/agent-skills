@@ -15,6 +15,8 @@ A plan exists and the job is to build it. Two things separate code that lands fr
 
 **Name what the plan doesn't say** — the tests, the failure paths, the rollout, the thing it assumed existed. Those gaps are yours to decide or to raise, and either is fine. Leaving them implicit is not: an unstated decision gets made anyway, silently, by whichever line you happen to write first.
 
+A gap that turns out to be a design decision rather than a detail — where a seam goes, what the interface promises, whether the operation is safe to run twice — is what `software-design` is for. Load it then, not by default: a plan that already settled the shape doesn't need it.
+
 ## 2. Decide the tests before the code
 
 This is the part of test-first work that pays, and the part usually skipped.

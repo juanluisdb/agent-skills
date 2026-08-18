@@ -123,11 +123,22 @@ If there are many threads, consider parallel passes by file, subsystem, or comme
 
 Only when the user explicitly says to respond, post, or draft replies:
 
-1. Load `code-review/references/conventional-comments.md` for format guidance if responding with structured comments; if that skill isn't installed, plain conventional-comments labels (`suggestion:` / `issue:` / `question:` / `nitpick:`, with `(blocking)` / `(non-blocking)` decorations) suffice
+1. Draft each reply per *How to write a reply* below
 2. Show the full batch to the user for final confirmation
 3. Post using the platform's API (for GitLab, see `glab` skill for posting workflow)
 
 **Do NOT post anything until the user explicitly says to.**
+
+### How to write a reply
+
+A reply is read in a narrow comment column by a colleague with a dozen other threads open. They should get the answer from the first line and be able to check it without asking you anything.
+
+- **Open with the disposition.** Fixed, not fixing, partly, or a question back — in the first few words, before the reasoning. Someone scanning ten threads needs to know which ones still want them.
+- **Point at evidence, not at reasoning.** The commit SHA, the file and line, the test that now covers it, the callers you traced. A colleague can check a link. They can't check a rationale.
+- **Two or three sentences is a finished reply.** Everyday words, one idea per sentence. No hedging, no "great catch" preamble, no restating their comment back at them. Keep every fact, path and number.
+- **Show it when the answer has a shape.** A before-and-after diff, the call path, the real values through the case they're worried about. A reviewer reading a paragraph about an ordering problem has to rebuild the ordering; four lines of sequence hand it over.
+- **A defence grants the concern first**, then shows why the state can't occur, names the cheaper rung you took instead, and invites the caller you may have missed. See *Weigh the Remedy Against the Risk*.
+- **Answer that thread and nothing else.** A summary across threads belongs in the MR description or one top-level comment, not appended to a reply about something narrower.
 
 ## Guardrails
 
